@@ -131,11 +131,14 @@ def process_swagger(spec, client_language):
 
     inline_primitive_models(spec, preserved_primitives_for_language(client_language))
 
+    if client_language == "java":
+        remove_kubernetes_models(spec)
+
     return spec
 
 def preserved_primitives_for_language(client_language):
     if client_language == "java":
-        return ["intstr.IntOrString", "resource.Quantity"]
+        return ["io.k8s.apimachinery.pkg.util.intstr.IntOrString", "io.k8s.apimachinery.pkg.api.resource.Quantity"]
     elif client_language == "csharp":
         return ["intstr.IntOrString", "resource.Quantity", "v1.Patch"]
     else:
@@ -195,6 +198,23 @@ def remove_deprecated_models(spec):
     spec['definitions'] = models
 
 
+def remove_kubernetes_models(spec):
+    """
+    In kubernetes 1.8 some of the models are renamed. Our remove_model_prefixes
+    still creates the same model names but there are some models added to
+    reference old model names to new names. These models broke remove_model_prefixes
+    and need to be removed.
+    """
+    models = {}
+    for k, v in spec['definitions'].items():
+        if k.startswith("io.k8s"):
+            new_name = k.rsplit(".", 2)[1]+'.'+k.rsplit(".", 2)[2]
+            rename_model(spec, k, new_name)
+        else:
+            models[k] = v
+    spec['definitions'] = models
+
+
 def remove_model_prefixes(spec):
     """Remove full package name from OpenAPI model names.
 
@@ -209,7 +229,7 @@ def remove_model_prefixes(spec):
 
     models = {}
     for k, v in spec['definitions'].items():
-        if k.startswith("io.k8s"):
+        if k.startswith("com.github.kubeflow"):
             models[k] = {"split_n": 2}
 
     conflict = True
