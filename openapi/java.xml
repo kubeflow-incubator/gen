@@ -2,11 +2,12 @@
   xmlns="http://maven.apache.org/POM/4.0.0" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.kubernetes</groupId>
-  <artifactId>client-java</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>client-java</name>
-  <url>http://kubernetes.io</url>
+  <groupId>org.kubeflow.client</groupId>
+  <artifactId>client-java-api</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <name>client-java-api</name>
+  <url>http://kubeflow.org</url>
+
   <build>
     <plugins>
       <plugin>
@@ -21,11 +22,11 @@
             <configuration>
               <inputSpec>${generator.spec.path}</inputSpec>
               <language>java</language>
-              <gitUserId>kubernetes-client</gitUserId>
-              <gitRepoId>client-java</gitRepoId>
+              <gitUserId>kubeflow-incubator</gitUserId>
+              <gitRepoId>tfjob-java-client</gitRepoId>
               <configOptions>
-                <projectName>kubernetes-java-client</projectName>
-                <projectDescription>Java client for Kubernetes.</projectDescription>
+                <projectName>client-java-api</projectName>
+                <projectDescription>Kubeflow java api</projectDescription>
                 <projectVersion>${generator.client.version}</projectVersion>
                 <projectLicenseName>Apache V2</projectLicenseName>
                 <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
@@ -33,9 +34,9 @@
                 <apiPackage>${generator.package.name}.apis</apiPackage>
                 <invokerPackage>${generator.package.name}</invokerPackage>
                 <ensureUniqueParams>true</ensureUniqueParams>
-                <groupId>io.kubernetes</groupId>
-                <artifactId>client-java</artifactId>
-                <artifactVersion>1.0-SNAPSHOT</artifactVersion>
+                <groupId>org.kubeflow.client</groupId>
+                <artifactId>client-java-api</artifactId>
+                <artifactVersion>0.1.0-SNAPSHOT</artifactVersion>
                 <sourceFolder>src/main/java</sourceFolder>
                 <localVariablePrefix></localVariablePrefix>
                 <serializableModel>false</serializableModel>
