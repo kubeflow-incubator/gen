@@ -46,6 +46,7 @@ RUN chmod go+rwx /root && umask 0 && cd /source/swagger-codegen && \
 COPY generate_client_in_container.sh /generate_client.sh
 COPY preprocess_spec.py /
 COPY custom_objects_spec.json /
+COPY swagger.json /
 COPY ${GENERATION_XML_FILE} /generation_params.xml
 
 ENTRYPOINT ["mvn-entrypoint.sh", "/generate_client.sh"]
